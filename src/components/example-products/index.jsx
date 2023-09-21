@@ -26,8 +26,6 @@ import ProductsUI from "./ui";
  * @requires module:productsUI
  */
 export default function Products() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
   /**
    * @typedef {object} Data
    * @property {Product[]} products
@@ -37,30 +35,18 @@ export default function Products() {
    */
   /** @type {[Data, React.Dispatch<Data>]} */
   const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch("https://dummyjson.com/products")
       .then((res) => res.json())
-      .then((result) => {
-        setIsLoading(false);
-        setData(result);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        setError(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .then(setData)
+      .catch(setError)
+      .finally(() => setIsLoading(false));
   }, []);
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (error) {
-    return <span>Error: {error?.message}</span>;
-  }
-
-  return <ProductsUI products={data?.products} />;
+  return (
+    <ProductsUI error={error} isLoading={isLoading} products={data?.products} />
+  );
 }

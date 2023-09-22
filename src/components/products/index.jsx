@@ -24,19 +24,20 @@ export default function ProductList() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch("https://dummyjson.com/products")
-            .then((res) => res.json())
-            .then((result) => {
-                setIsLoading(false);
+        const fetchData = async () => {
+            try {
+                setIsLoading(true);
+                const res = await fetch("https://dummyjson.com/products");
+                const result = await res.json();
                 setProducts(result.products);
-            })
-            .catch((err) => {
-                setIsLoading(false);
+            } catch (err) {
                 setError(err);
-            })
-            .finally(() => {
+            } finally {
                 setIsLoading(false);
-            });
+            }
+        };
+
+        fetchData();
     }, []);
 
     if (isLoading) {

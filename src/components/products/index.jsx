@@ -3,23 +3,7 @@ import ProductUI from "../products/ui"
 
 
 export default function ProductList() {
-    const [products, setProducts] = useState([
-        /* {
-            id: 1,
-            title: "iPhone 9",
-            description: "An apple mobile which is nothing like apple",
-            price: 549,
-            discountPercentage: 12.96,
-            rating: 4.69,
-            stock: 94,
-            brand: "Apple",
-            category: "smartphones",
-            thumbnail: "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-            images: ["https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg", "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg", "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"]
-        }, */
-    ]);
-
-
+    const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -29,6 +13,7 @@ export default function ProductList() {
                 setIsLoading(true);
                 const res = await fetch("https://dummyjson.com/products");
                 const result = await res.json();
+                console.log("json", result);
                 setProducts(result.products);
             } catch (err) {
                 setError(err);
@@ -56,7 +41,7 @@ export default function ProductList() {
                     list of Products
                 </h4>
 
-                <ProductUI></ProductUI>
+                <ProductUI products={products}></ProductUI>
 
             </div>
         </article>

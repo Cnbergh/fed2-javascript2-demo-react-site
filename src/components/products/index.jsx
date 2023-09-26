@@ -30,7 +30,7 @@ export default function ProductList() {
     }
 
     if (error) {
-        return <span>Error: {error?.message}</span>;
+        return <span>Error: {error?.message}...</span>;
     }
 
 

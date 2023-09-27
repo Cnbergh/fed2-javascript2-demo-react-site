@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import PostItem from "./PostItem";
 import Skeleton from "./Skeleton";
 import Error from "./Error";
+import CreatePostForm from "../create-post";
 
 /**
  * @typedef {import('./index.jsx').Product} Product
@@ -26,6 +27,7 @@ export default function PostsUI({
         <h4 className="text-2xl font-bold tracking-tight text-gray-900">
           List of Posts
         </h4>
+        <CreatePostForm />
 
         {error && <Error>{error?.message}</Error>}
 

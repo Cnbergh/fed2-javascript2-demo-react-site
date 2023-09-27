@@ -16,6 +16,12 @@ export default function PostItem({
   title = "no title",
   authorName = "no author",
 }) {
+  function handleDelete(postId) {
+    console.log("delete", postId);
+    fetch(`https://dummyjson.com/posts/${postId}`, {
+      method: "DELETE",
+    });
+  }
   return (
     <div key={id} className="relative group">
       <div className="w-full overflow-hidden bg-gray-200 rounded-md aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
@@ -28,11 +34,17 @@ export default function PostItem({
       <div className="flex justify-between mt-4">
         <div>
           <h3 className="text-sm text-gray-700">
-            <a href={`/products/${id}`}>
-              <span aria-hidden="true" className="absolute inset-0" />
-              {title}
-            </a>
+            {/* <a href={`/products/${id}`}> */}
+            {title}
+            {/* </a> */}
           </h3>
+          <button
+            onClick={() => handleDelete(id)}
+            className="cursor-pointer text-danger"
+          >
+            Delete
+          </button>
+
           <p className="mt-1 text-sm text-gray-500">Person {authorName}</p>
           <p className="mt-1 text-sm text-gray-500">{body}</p>
         </div>

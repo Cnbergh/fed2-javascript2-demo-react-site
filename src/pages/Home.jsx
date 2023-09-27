@@ -1,11 +1,10 @@
-import Products from "../components/example-products";
-import Carts from "../components/example-carts";
+// import Products from "../components/products";
+import Posts from "../components/example-posts";
 
 function HomePage() {
   return (
     <>
-      <Carts />
-      <Products />
+      <Posts />
     </>
   );
 }

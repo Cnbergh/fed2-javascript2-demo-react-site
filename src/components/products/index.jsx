@@ -12,14 +12,20 @@ export default function ProductsList() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then(({ products }) => setProducts(products))
-      .catch((err) => {
-        console.warn("err", err);
-        setError(err);
-      })
-      .finally(() => setIsLoading(false));
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("https://dummyjson.com/products");
+        const json = await response.json();
+        setProducts(json.products);
+      } catch (error) {
+        console.warn("err", error);
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   if (isLoading) {

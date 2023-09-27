@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 // import { useAllUsers } from "../../lib/my-api";
 import PostUI from "./ui";
 
+const API_URL = import.meta.env.API_URL;
+
 /**
  * A Post created by a end-user.
  * @typedef  {object} Post
@@ -28,7 +30,7 @@ export default function Posts() {
   const [error, setError] = useState(null);
 
   const { isLoadingCool, errorCool, dataCool } = useQuery(["foo"], () =>
-    fetch("https://dummyjson.com/posts").then((res) => res.json()),
+    fetch(`${API_URL}/posts`).then((res) => res.json()),
   );
 
   console.log("isLoadingCool", isLoadingCool);
@@ -53,12 +55,12 @@ export default function Posts() {
         // const allPostsJson = await fetchThings("https://dummyjson.com/posts");
         // const allUsersJson = await fetchThings("https://dummyjson.com/users");
         const allData = await Promise.all([
-          fetchThings("https://dummyjson.com/posts"),
-          fetchThings("https://dummyjson.com/users"),
+          fetchThings(`${API_URL}/posts`),
+          fetchThings(`${API_URL}/users`),
         ]);
 
-        const allUsers = allData[1].users;
-        const allPosts = allData[0].posts;
+        const allUsers = allData[1];
+        const allPosts = allData[0];
 
         const postsWithUsers = allPosts.map((post) => {
           const foundUser = allUsers.find((user) => user.id === post.userId);

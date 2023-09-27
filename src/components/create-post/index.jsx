@@ -1,4 +1,5 @@
 export default function CreatePostForm() {
+  const [posts, setPosts] = useState([]);
   async function handleOnSubmit(event) {
     event.preventDefault();
 
@@ -22,6 +23,13 @@ export default function CreatePostForm() {
 
     console.log("data from server using async/await", json);
   }
+
+  function handleDelete(index) {
+    const newPosts = [...posts];
+    newPosts.splice(index, 1);
+    setPosts(newPosts);
+  }
+
 
   return (
     // Create a form that has a title, body, and authorName input fields.

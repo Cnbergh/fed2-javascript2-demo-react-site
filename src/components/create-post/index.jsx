@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function CreatePostForm() {
   async function handleOnSubmit(event) {
     event.preventDefault();
@@ -7,33 +9,38 @@ export default function CreatePostForm() {
 
     const newPost = {
       title: title.value,
+      body: title.value,
       userId: userId.value,
     };
 
-    console.log("newPost", newPost);
-
-    const response = await fetch("https://dummyjson.com/posts/add", {
+    const response = await fetch(`${API_URL}/posts`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json; charset=UTF-8" },
       body: JSON.stringify(newPost),
     });
 
     const json = await response.json();
 
-    console.log("data from server using async/await", json);
+    console.warn("data from server using async/await", json);
   }
 
   return (
     // Create a form that has a title, body, and authorName input fields.
-    <form className="space-y-6" onSubmit={handleOnSubmit}>
-      <div>
-        <label
-          htmlFor="title"
-          className="block text-sm font-medium leading-6 text-black"
-        >
-          title
-        </label>
-        <div className="mt-2">
+    <form
+      className="p-4 py-6 mt-8 space-y-6 rounded shadow bg-zinc-900"
+      onSubmit={handleOnSubmit}
+    >
+      <h3>Create a new post</h3>
+
+      <section>
+        <div className="flex flex-col gap-1 mt-2">
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium leading-6 text-white"
+          >
+            title
+          </label>
+
           <input
             id="title"
             name="title"
@@ -41,18 +48,16 @@ export default function CreatePostForm() {
             className="block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
         </div>
-      </div>
+      </section>
 
       <div>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-1 mt-2">
           <label
             htmlFor="userId"
-            className="block text-sm font-medium leading-6 text-black"
+            className="block text-sm font-medium leading-6 text-white"
           >
             User Id
           </label>
-        </div>
-        <div className="mt-2">
           <input
             id="userId"
             name="userId"

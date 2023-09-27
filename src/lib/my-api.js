@@ -86,3 +86,15 @@ export function useLogin(username, password) {
     mutationFn: () => login(username, password),
   });
 }
+
+export const fetchThings = async (url) => {
+  try {
+    // NOTE: We are using axios instead of fetch
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.warn("err", error);
+    // NOTE: We are throwing the error so that we can catch it in the catch block below
+    throw error;
+  }
+};

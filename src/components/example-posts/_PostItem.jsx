@@ -24,6 +24,47 @@ export default function PostItem({
   handleOnEdit = () => console.warn("Edit item"),
 }) {
   const [isEditing, setIsEditing] = useState(false);
+  // NOTE: THis is how you would delete a post inside of a component
+  // eslint-disable-next-line no-unused-vars
+  async function _handleDelete(postId) {
+    const res = await fetch(`${API_URL}/posts/${postId}`, {
+      method: "DELETE",
+    });
+
+    const data = await res.json();
+    console.log("Post was successfully deleted", data);
+  }
+
+  // NOTE: THis is how you would delete a post inside of a component BUT we should avoid writing logic in UI components
+  // eslint-disable-next-line no-unused-vars
+  async function _editPost(event) {
+    event.preventDefault();
+
+    const { postEditBody } = event.target.elements;
+
+    const newPost = {
+      title: title,
+      userId: id,
+      body: postEditBody.value,
+      id: id,
+    };
+
+    try {
+      const response = await fetch(`${API_URL}/posts/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json; charset=UTF-8" },
+        body: JSON.stringify(newPost),
+      });
+
+      const json = await response.json();
+
+      console.warn("Success, updated post!", json);
+    } catch (error) {
+      console.warn("Couldn't update post", error);
+    } finally {
+      setIsEditing(false);
+    }
+  }
 
   return (
     <div key={id} className="relative group">
@@ -71,14 +112,12 @@ export default function PostItem({
           ) : (
             <p className="mt-1 text-sm text-gray-500">{body}</p>
           )}
-
           <button
             onClick={handleOnDelete}
             className="px-2 py-1 mb-2 mr-2 text-xs font-medium text-center text-white bg-red-700 rounded-full hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
           >
             Delete
           </button>
-
           <button
             onClick={() => setIsEditing((prev) => !prev)}
             className="px-2 py-1 mb-2 mr-2 text-xs font-medium text-center text-white bg-orange-700 rounded-full hover:bg-orange-800 focus:outline-none focus:ring-4 focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-900"

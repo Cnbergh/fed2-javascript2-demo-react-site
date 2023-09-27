@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 // import { useAllUsers } from "../../lib/my-api";
 import PostUI from "./ui";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 /**
  * A product sold on the website which end-users can add their Cart.
  * @typedef  {object} Product
@@ -40,13 +42,13 @@ export default function Products() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://dummyjson.com/posts")
+    fetch(`${API_URL}/posts`)
       .then((res) => res.json())
       .then(setData)
       .catch(setError)
       .finally(() => setIsLoading(false));
 
-    fetch("https://dummyjson.com/users")
+    fetch(`${API_URL}/users`)
       .then((res) => res.json())
       .then((data) => {
         setUsers(data.users);
@@ -55,10 +57,7 @@ export default function Products() {
       .finally(() => setIsLoading(false));
 
     const postsWithUsers = data?.posts.map((post) => {
-      console.log("post", post);
-
       const user = users?.find((user) => user.id === post.userId);
-      console.log("user", user);
       return { ...post, authorName: user?.firstName };
     });
 

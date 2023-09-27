@@ -41,7 +41,7 @@ export default function Skeleton() {
               </h3>
             </div>
             <p className="text-sm font-medium text-gray-900">
-              <div className="block bg-slate-400" />
+              <span className="block bg-slate-400" />
             </p>
           </div>
         </div>

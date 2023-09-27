@@ -11,7 +11,6 @@ import PropTypes from "prop-types";
  * @param {Cart[]} props.carts The list of carts to display
  */
 export default function CartsUI({ carts = [] }) {
-  console.log("carts", carts);
   return (
     <article className="bg-white">
       <div className="max-w-2xl px-4 py-16 mx-auto sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

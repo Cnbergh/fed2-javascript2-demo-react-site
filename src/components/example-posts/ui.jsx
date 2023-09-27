@@ -4,22 +4,25 @@ import PropTypes from "prop-types";
 import PostItem from "./PostItem";
 import Skeleton from "./Skeleton";
 import Error from "./Error";
+import { PostShape } from "./types";
 import CreatePostForm from "../create-post";
 
 /**
- * @typedef {import('./index.jsx').Product} Product
+ * @typedef {import('./types.js').Post} Post
  */
 
 /**
  * displays a list of Posts
  * @param {Object} params The list of Posts to display
- * @param {Product[]} params.Posts The list of Posts to display
+ * @param {Post[]} params.posts The list of Posts to display
  * @see module:PostsHOC Parent Component
  */
 export default function PostsUI({
   posts = [],
   isLoading = true,
   error = null,
+  onDeleteItem = () => console.warn("Delete item"),
+  onEditItem = () => console.warn("Edit item"),
 }) {
   return (
     <article className="bg-white">
@@ -27,6 +30,7 @@ export default function PostsUI({
         <h4 className="text-2xl font-bold tracking-tight text-gray-900">
           List of Posts
         </h4>
+
         <CreatePostForm />
 
         {error && <Error>{error?.message}</Error>}
@@ -35,16 +39,23 @@ export default function PostsUI({
           {isLoading ? (
             <Skeleton />
           ) : (
-            posts.map(({ id, reactions, body, title, authorName }) => (
-              <PostItem
-                key={id}
-                id={id}
-                body={body}
-                reactions={reactions}
-                title={title}
-                authorName={authorName}
-              />
-            ))
+            posts.map(
+              ({ id, reactions, body, title, authorName, imageUrl }) => (
+                <PostItem
+                  key={id}
+                  id={id}
+                  body={body}
+                  reactions={reactions}
+                  title={title}
+                  authorName={authorName}
+                  imageUrl={imageUrl}
+                  handleOnDelete={() => onDeleteItem(id)}
+                  handleOnEdit={(event, setIsEditing) =>
+                    onEditItem(event, setIsEditing)
+                  }
+                />
+              ),
+            )
           )}
         </div>
       </div>
@@ -55,10 +66,7 @@ export default function PostsUI({
 PostsUI.propTypes = {
   isLoading: PropTypes.bool,
   error: PropTypes.object,
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-    }),
-  ),
+  posts: PropTypes.arrayOf(PropTypes.shape(PostShape)),
+  onDeleteItem: PropTypes.func,
+  onEditItem: PropTypes.func,
 };

@@ -9,6 +9,10 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  function logout() {
+    localStorage.removeItem("access_token");
+  }
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -91,7 +95,7 @@ export default function Example() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="#"
+                            to="/profile"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700",
@@ -104,7 +108,7 @@ export default function Example() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="#"
+                            to="#"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700",
@@ -117,7 +121,8 @@ export default function Example() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="#"
+                            to="/login"
+                            onClick={logout}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700",

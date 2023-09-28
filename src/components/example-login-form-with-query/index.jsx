@@ -2,7 +2,7 @@ import { login } from "../../lib/my-api";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 
-function ExampleLoginForm() {
+function ExampleLoginFormWithQuery() {
   const navigate = useNavigate();
   const loginMutation = useMutation({
     mutationFn: (username, password) => login(username, password),
@@ -39,4 +39,4 @@ function ExampleLoginForm() {
   );
 }
 
-export default ExampleLoginForm;
+export default ExampleLoginFormWithQuery;

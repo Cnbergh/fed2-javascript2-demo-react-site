@@ -45,6 +45,7 @@ export default function PostItem({
 
           {isEditing ? (
             <form onSubmit={(event) => handleOnEdit(event, setIsEditing)}>
+              {/* We use a hidden input to supply the id in the form event */}
               <input value={id} type="hidden" name="postId" />
               <label
                 htmlFor="postEditBody"

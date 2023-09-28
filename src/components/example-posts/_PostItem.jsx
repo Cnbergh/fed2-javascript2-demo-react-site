@@ -20,47 +20,56 @@ export default function PostItem({
   title = "no title",
   authorName = "no author",
   imageUrl = "https://avatar.iran.liara.run/public",
-  handleOnDelete = () => console.warn("Delete item"),
-  handleOnEdit = () => console.warn("Edit item"),
+  userId,
 }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [message, setMessage] = useState(body);
+
   // NOTE: THis is how you would delete a post inside of a component
   // eslint-disable-next-line no-unused-vars
-  async function _handleDelete(postId) {
-    const res = await fetch(`${API_URL}/posts/${postId}`, {
+  async function deletePost(id) {
+    const res = await fetch(`${API_URL}/posts/${id}`, {
       method: "DELETE",
     });
-
     const data = await res.json();
     console.log("Post was successfully deleted", data);
   }
 
   // NOTE: THis is how you would delete a post inside of a component BUT we should avoid writing logic in UI components
   // eslint-disable-next-line no-unused-vars
-  async function _editPost(event) {
+
+  async function handleOnSubmitEdit(event) {
     event.preventDefault();
 
-    const { postEditBody } = event.target.elements;
+    // We get the body from the form.
+    const textAreaElement = event.target.elements.postEditBody.value;
 
-    const newPost = {
-      title: title,
-      userId: id,
-      body: postEditBody.value,
+    console.log("formElements", textAreaElement);
+
+    const payload = {
       id: id,
+      body: textAreaElement,
+      userId: userId,
     };
 
     try {
-      const response = await fetch(`${API_URL}/posts/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json; charset=UTF-8" },
-        body: JSON.stringify(newPost),
-      });
+      setMessage(textAreaElement);
+      // We send our form data to the API endpoint
+      const res = await fetch(
+        `https://jsonplaceholder.typicode.com/posts/${id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        },
+      );
 
-      const json = await response.json();
-
-      console.warn("Success, updated post!", json);
+      const data = await res.json();
+      console.log("Post was successfully updated", data);
     } catch (error) {
-      console.warn("Couldn't update post", error);
+      console.warn("Post was not updated", error);
     } finally {
       setIsEditing(false);
     }
@@ -84,11 +93,11 @@ export default function PostItem({
           <p className="mt-1 text-sm text-gray-500">Person {authorName}</p>
 
           {isEditing ? (
-            <form onSubmit={(event) => handleOnEdit(event, setIsEditing)}>
-              <input value={id} type="hidden" name="postId" />
+            <form onSubmit={handleOnSubmitEdit}>
+              {/* <input value={id} type="hidden" name="postId" /> */}
               <label
                 htmlFor="postEditBody"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
               >
                 Edit your post
               </label>
@@ -99,7 +108,7 @@ export default function PostItem({
                 rows="4"
                 cols="50"
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                defaultValue={body}
+                defaultValue={message}
               />
 
               <button
@@ -110,14 +119,17 @@ export default function PostItem({
               </button>
             </form>
           ) : (
-            <p className="mt-1 text-sm text-gray-500">{body}</p>
+            <p className="mt-1 text-sm text-gray-500">{message}</p>
           )}
           <button
-            onClick={handleOnDelete}
+            onClick={() => {
+              deletePost(id);
+            }}
             className="px-2 py-1 mb-2 mr-2 text-xs font-medium text-center text-white bg-red-700 rounded-full hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
           >
             Delete
           </button>
+
           <button
             onClick={() => setIsEditing((prev) => !prev)}
             className="px-2 py-1 mb-2 mr-2 text-xs font-medium text-center text-white bg-orange-700 rounded-full hover:bg-orange-800 focus:outline-none focus:ring-4 focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-900"

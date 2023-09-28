@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { PostShape } from "./types";
-import { Link } from "@tanstack/react-router";
+import Skeleton from "./Skeleton";
+import Error from "./Error";
 
 /**
  * @typedef {import('./types.js').Post} Post
@@ -12,7 +13,9 @@ import { Link } from "@tanstack/react-router";
  * displays a post
  * @param {Post} params The post to display
  */
-export default function PostItem({
+export default function UI({
+  isLoading = true,
+  error = null,
   id = "no id",
   body = "no description",
   reactions = 0,
@@ -24,24 +27,28 @@ export default function PostItem({
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
+  if (error) {
+    <Error>{error?.message}</Error>;
+  }
+
+  if (isLoading) {
+    <Skeleton />;
+  }
+
   return (
-    <div className="relative group">
+    <div className="relative group p-9">
       <div className="w-full overflow-hidden bg-gray-200 rounded-md aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
-        <Link to={`/posts/${id}`}>
-          <img
-            src={imageUrl}
-            className="object-cover object-center w-full h-full lg:h-full lg:w-full"
-            alt={title}
-          />
-        </Link>
+        <img
+          src={imageUrl}
+          className="object-cover object-center w-full h-full lg:h-full lg:w-full"
+          alt={title}
+        />
       </div>
       <div className="flex justify-between mt-4">
         <div>
-          <Link to={`/posts/${id}`}>
-            <h3 className="text-sm text-gray-700">{title}</h3>
+          <h3 className="text-sm text-gray-700">{title}</h3>
 
-            <p className="mt-1 text-sm text-gray-500">Person {authorName}</p>
-          </Link>
+          <p className="mt-1 text-sm text-gray-500">{authorName}</p>
 
           {isEditing ? (
             <form onSubmit={(event) => handleOnEdit(event, setIsEditing)}>
@@ -93,4 +100,4 @@ export default function PostItem({
   );
 }
 
-PostItem.propTypes = PostShape;
+UI.propTypes = PostShape;

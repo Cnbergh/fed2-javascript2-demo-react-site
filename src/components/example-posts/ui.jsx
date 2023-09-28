@@ -2,6 +2,7 @@
 import PropTypes from "prop-types";
 
 import PostItem from "./PostItem";
+// import PostItem from "./_PostItem";
 import Skeleton from "./Skeleton";
 import Error from "./Error";
 import { PostShape } from "./types";

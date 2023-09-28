@@ -1,6 +1,5 @@
 /** @module PostItemUI component */
 
-import { useState } from "react";
 import { PostShape } from "./types";
 import Skeleton from "./Skeleton";
 import Error from "./Error";
@@ -24,9 +23,9 @@ export default function UI({
   imageUrl = "https://avatar.iran.liara.run/public",
   handleOnDelete = () => console.warn("Delete item"),
   handleOnEdit = () => console.warn("Edit item"),
+  onToggleEdit = () => console.warn("Toggle edit"),
+  isEditing = false,
 }) {
-  const [isEditing, setIsEditing] = useState(false);
-
   if (error) {
     <Error>{error?.message}</Error>;
   }
@@ -51,7 +50,7 @@ export default function UI({
           <p className="mt-1 text-sm text-gray-500">{authorName}</p>
 
           {isEditing ? (
-            <form onSubmit={(event) => handleOnEdit(event, setIsEditing)}>
+            <form onSubmit={(event) => handleOnEdit(event, onToggleEdit)}>
               <input value={id} type="hidden" name="postId" />
               <label
                 htmlFor="postEditBody"
@@ -88,7 +87,7 @@ export default function UI({
           </button>
 
           <button
-            onClick={() => setIsEditing((prev) => !prev)}
+            onClick={() => onToggleEdit((prev) => !prev)}
             className="px-2 py-1 mb-2 mr-2 text-xs font-medium text-center text-white bg-orange-700 rounded-full hover:bg-orange-800 focus:outline-none focus:ring-4 focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-900"
           >
             Edit

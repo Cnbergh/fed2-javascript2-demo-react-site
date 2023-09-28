@@ -5,7 +5,7 @@ import { PostShape } from "./types";
 import { Link } from "@tanstack/react-router";
 
 /**
- * @typedef {import('./types.js').Post} Post
+ * @typedef {import('./types.js').NoroffPostModel} Post
  */
 
 /**
@@ -16,6 +16,7 @@ export default function PostItem({
   id = "no id",
   body = "no description",
   reactions = 0,
+  createdAt,
   title = "no title",
   authorName = "no author",
   imageUrl = "https://avatar.iran.liara.run/public",
@@ -23,26 +24,34 @@ export default function PostItem({
   handleOnEdit = () => console.warn("Edit item"),
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const href = `/posts/${id}?isediting=${encodeURIComponent(isEditing)}`;
+  const href = new URL(`/posts/${id}`, window.location.origin);
+  href.searchParams.append("isediting", isEditing);
+
+  const date = new Date(createdAt);
+  const formattedDate = new Intl.DateTimeFormat("en-NO").format(date);
 
   return (
     <div className="relative group">
+      <div className="flex justify-between mt-4">
+        <p className="text-gray-500 text-ms">{authorName}</p>
+        <p className="text-xs text-gray-500">{formattedDate}</p>
+      </div>
+
       <div className="w-full overflow-hidden bg-gray-200 rounded-md aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
-        <Link to={href}>
+        <a href={href}>
           <img
-            src={imageUrl}
+            src={imageUrl ? imageUrl : "https://picsum.photos/400/300"}
             className="object-cover object-center w-full h-full lg:h-full lg:w-full"
             alt={title}
           />
-        </Link>
+        </a>
       </div>
+
       <div className="flex justify-between mt-4">
         <div>
-          <Link to={href}>
+          <a href={href}>
             <h3 className="text-sm text-gray-700">{title}</h3>
-
-            <p className="mt-1 text-sm text-gray-500">Person {authorName}</p>
-          </Link>
+          </a>
 
           {isEditing ? (
             <form onSubmit={(event) => handleOnEdit(event, setIsEditing)}>

@@ -21,4 +21,5 @@ export const PostShape = {
   imageUrl: PropTypes.string,
   handleOnDelete: PropTypes.func,
   handleOnEdit: PropTypes.func,
+  isEditing: PropTypes.bool,
 };

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import UI from "./ui";
+import Skeleton from "./Skeleton";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -15,10 +16,15 @@ const API_URL = import.meta.env.VITE_API_URL;
  * @requires module:UI
  */
 export default function Posts() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const initialIsEditing =
+    searchParams.get("isediting").toLocaleLowerCase() === "true";
+
   /** @type {[Post, React.Dispatch<Data>]} */
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isEditing, setIsEditing] = useState(initialIsEditing);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +55,7 @@ export default function Posts() {
     fetchData();
   }, []);
 
-  console.log("post", post);
+  if (isLoading) return <Skeleton />;
 
   return (
     <UI
@@ -61,6 +67,8 @@ export default function Posts() {
       title={post?.title}
       authorName={post?.authorName}
       imageUrl={post?.imageUrl}
+      isEditing={isEditing}
+      onToggleEdit={setIsEditing}
       handleOnDelete={() => console.warn("Delete item")}
       handleOnEdit={() => console.warn("Edit item")}
     />

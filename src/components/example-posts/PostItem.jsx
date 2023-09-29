@@ -23,7 +23,11 @@ export default function PostItem({
   handleOnEdit = () => console.warn("Edit item"),
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const href = `/posts/${id}?isediting=${encodeURIComponent(isEditing)}`;
+  const href = `/posts/${id}?isediting=${isEditing}&id=${id}`;
+
+  // NOTE: This is the same as the line above but more modern
+  //   const href = new URL(`/posts/${id}`);
+  // href.searchParams.append("isediting", isEditing);
 
   return (
     <div className="relative group">

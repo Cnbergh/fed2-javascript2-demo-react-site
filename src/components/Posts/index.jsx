@@ -3,7 +3,7 @@ import PostsUI from "./ui";
 
 function Posts() {
   const { status, error, data } = useAllUsers();
-  const isLoading = status === "loading";
+  const isLoading = status === "loading...";
 
   if (isLoading) {
     return <span>Loading...</span>;

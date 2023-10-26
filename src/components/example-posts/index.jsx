@@ -14,7 +14,7 @@ const fetchThings = async (url) => {
     const response = await axios.get(url);
     return response.data;
   } catch (error) {
-    console.warn("err", error);
+    console.warn("err from API", error);
     // NOTE: We are throwing the error so that we can catch it in the catch block below
     throw error;
   }

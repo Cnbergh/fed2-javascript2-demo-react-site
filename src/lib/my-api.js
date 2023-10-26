@@ -36,6 +36,11 @@ export function useUsersPosts(userId) {
   });
 }
 
+/**
+ * This makes a fetch call to the dummyjson API to get a single user
+ * @param {string} id - The id of the user to fetch
+ * @returns {Promise} - A promise that resolves to the user object
+ */
 export async function fetchUser(id) {
   try {
     const response = await axios.get(`${BASE_URL}/users/${id}`);

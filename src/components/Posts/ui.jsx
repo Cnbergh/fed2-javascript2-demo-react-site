@@ -1,5 +1,14 @@
 import PropTypes from "prop-types";
 
+/**
+ *
+ * @param {array} people A list of people objects.
+ * @returns React UI component that displays a list of people's comments.
+ * @example
+ * ```jsx
+ * <PostsUI people={[{id: 1, name: john, email: john@mail.com}]} />
+ * ```
+ */
 export default function PostsUI({ people = [] }) {
   return (
     <ul role="list" className="divide-y divide-gray-100 bg-white">

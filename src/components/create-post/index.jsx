@@ -29,6 +29,7 @@ export default function CreatePostForm() {
     <form
       className="p-4 py-6 mt-8 space-y-6 rounded shadow bg-zinc-900"
       onSubmit={handleOnSubmit}
+      data-testid="creat-post-form"
     >
       <h3>Create a new post</h3>
 

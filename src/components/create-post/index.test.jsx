@@ -3,29 +3,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import CreatePostForm from "./index";
 
 describe("Create Post", () => {
-  let originalFetch;
-
-  beforeEach(async () => {
-    originalFetch = global.fetch;
-    global.fetch = vi.fn(() =>
-      Promise.resolve({
-        json: () =>
-          Promise.resolve([
-            {
-              userId: 1,
-              id: 1,
-              title: "Kaliteye hoşgeldiniz",
-              completed: false,
-            },
-          ]),
-      }),
-    );
-  });
-
-  afterEach(() => {
-    global.fetch = originalFetch;
-  });
-
   it("fills in form", async () => {
     render(<CreatePostForm />);
     const h3 = await screen.getByText("Create a new post");

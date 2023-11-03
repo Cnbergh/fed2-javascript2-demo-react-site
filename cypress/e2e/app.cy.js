@@ -11,7 +11,6 @@ describe("Post page", () => {
 
   it("creates a new post", () => {
     cy.visit("https://localhost:5173/");
-    console.log(Cypress.env("CYPRESS_API_URL"));
     cy.intercept("POST", `https://jsonplaceholder.typicode.com/posts`).as(
       "new-post",
     );
@@ -25,5 +24,11 @@ describe("Post page", () => {
       "response.statusCode",
       201,
     );
+    /* ==== Generated with Cypress Studio ==== */
+    cy.get(':nth-child(1) > .flex > div > .bg-orange-700').click();
+    cy.get('#postEditBody').click();
+    cy.get('form > .text-white').click();
+    cy.get(':nth-child(2) > .flex > div > .bg-red-700').click();
+    /* ==== End Cypress Studio ==== */
   });
 });

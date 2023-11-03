@@ -24,5 +24,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          wait-on: http://localhost:5173
+          wait-on: https://localhost:5173
           start: npx vite --host

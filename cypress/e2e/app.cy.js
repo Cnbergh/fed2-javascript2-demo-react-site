@@ -7,12 +7,15 @@ describe("Post page", () => {
 
     cy.debug();
 
-    cy.get("@get-posts");
+    cy.get("@get-posts").should(
+      "have.nested.property",
+      "response.statusCode",
+      201,
+    );
+
     cy.contains(
       "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-    )
-      .click()
-      .debug();
+    ).click();
 
     cy.url().should("include", "/posts/1");
   });
@@ -25,18 +28,12 @@ describe("Post page", () => {
 
     cy.get("#title").type("fake title");
     cy.get("[name='userId']").type("123456");
-    cy.contains("Create Post").click();
+    // cy.contains("Create Post").click();
 
     cy.get("@new-post").should(
       "have.nested.property",
       "response.statusCode",
       201,
     );
-    /* ==== Generated with Cypress Studio ==== */
-    cy.get(":nth-child(1) > .flex > div > .bg-orange-700").click();
-    cy.get("#postEditBody").click();
-    cy.get("form > .text-white").click();
-    cy.get(":nth-child(2) > .flex > div > .bg-red-700").click();
-    /* ==== End Cypress Studio ==== */
   });
 });

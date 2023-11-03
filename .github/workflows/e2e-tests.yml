@@ -25,4 +25,4 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           wait-on: https://localhost:5173
-          start: npx vite --host
+          start: npx vite --host --https

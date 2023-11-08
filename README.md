@@ -1,3 +1,11 @@
+# Links
+- [Production Website]() #TODO
+- [Staging Website]() #TODO
+- [Project Plan]() #TODO
+- [Design specifications]() #TODO
+- [Design Tokens]() #TODO
+
+
 # Simplified React + Vite Project Overview
 
 ## Key Features
@@ -21,6 +29,7 @@
 - React
 - TanStack/Query
 - Cypress e2e Testing
-- Vitest unit Testing
+- Vitest Unit Testing
 - formkit/auto-animate
 - Tailwind CSS
+- shadcn UI

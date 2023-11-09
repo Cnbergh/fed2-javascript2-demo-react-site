@@ -7,4 +7,7 @@ export default defineConfig({
       // implement node event listeners here
     },
   },
+  env: {
+    productionURL: "https://www.google.com",
+  },
 });

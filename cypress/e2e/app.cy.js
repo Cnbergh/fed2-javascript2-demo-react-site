@@ -1,6 +1,6 @@
 describe("Post page", () => {
   it("navigates to a single post", () => {
-    cy.visit("https://localhost:5173/");
+    cy.visit("http://localhost:5173/");
     cy.intercept("GET", `https://jsonplaceholder.typicode.com/posts`).as(
       "get-posts",
     );
@@ -21,7 +21,7 @@ describe("Post page", () => {
   });
 
   it("creates a new post", () => {
-    cy.visit("https://localhost:5173/");
+    cy.visit("http://localhost:5173/");
     cy.intercept("POST", `https://jsonplaceholder.typicode.com/posts`).as(
       "new-post",
     );

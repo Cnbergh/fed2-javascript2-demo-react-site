@@ -9,14 +9,18 @@ export default function CreatePostForm() {
     formData.append("userId", 1);
     formData.append("body", formData.get("title"));
 
-    const response = await fetch(`${API_URL}/posts`, {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const response = await fetch(`${API_URL}/posts`, {
+        method: "POST",
+        body: formData,
+      });
 
-    const json = await response.json();
+      const json = await response.json();
 
-    console.warn("data from server using async/await", json);
+      console.warn("data from server using async/await", json);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (

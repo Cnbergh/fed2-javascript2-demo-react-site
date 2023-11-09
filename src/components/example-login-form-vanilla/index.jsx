@@ -16,6 +16,7 @@ function ExampleRegisterForm() {
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     const { email, password } = event.target.elements;
 

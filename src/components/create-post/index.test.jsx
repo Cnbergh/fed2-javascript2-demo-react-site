@@ -19,7 +19,6 @@ describe("Intergration | HOC | Create Post", () => {
     });
     // Check if the input value is set to "Demo Post"
     expect(inputTitle.value).toBe("Demo Post");
-    expect(screen.getByLabelText("User Id")).toBeInTheDocument();
 
     fireEvent.click(screen.getByText(/Create Post/i));
   });

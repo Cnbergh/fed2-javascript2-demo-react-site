@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeAll, afterEach, vi } from "vitest";
-import { screen, render } from "@testing-library/react";
+import { describe, it, expect, afterEach, vi } from "vitest";
+import { screen } from "@testing-library/react";
 import { renderWithUser } from "../../lib/utils";
 
 import Component from "./index";

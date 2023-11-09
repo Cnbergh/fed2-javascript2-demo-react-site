@@ -1,7 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
-function ExampleRegisterForm() {
+function ExampleSignInForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -90,7 +90,7 @@ function ExampleRegisterForm() {
                   type="email"
                   autoComplete="email"
                   required
-                  defaultValue="first.last@stud.noroff.no"
+                  placeholder="first.last@stud.noroff.no"
                   className="px-1 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -153,4 +153,4 @@ function ExampleRegisterForm() {
   );
 }
 
-export default ExampleRegisterForm;
+export default ExampleSignInForm;

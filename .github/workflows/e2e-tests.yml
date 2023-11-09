@@ -26,5 +26,3 @@ jobs:
         with:
           wait-on: http://localhost:5173
           start: npx vite --host
-        env:
-          NODE_TLS_REJECT_UNAUTHORIZED: 0

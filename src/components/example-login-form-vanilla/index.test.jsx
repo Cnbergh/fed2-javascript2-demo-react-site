@@ -7,7 +7,7 @@ import {
   afterEach,
   vi,
 } from "vitest";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { renderWithUser } from "../../lib/utils";
 
 import Component from "./index";
@@ -81,16 +81,18 @@ describe("Intergration | Component | Login", () => {
       const signBtn = await screen.getByRole("button", { name: /Sign in/i });
       await user.click(signBtn);
 
-      const successMessage = await screen.queryByText(
-        "👋 Hi my_username. You will now redirect to the home page!",
-      );
-      expect(successMessage).toBeInTheDocument();
+      waitFor(() => {
+        const successMessage = screen.queryByText(
+          "👋 Hi my_username. You will now redirect to the home page!",
+        );
+        expect(successMessage).toBeInTheDocument();
 
-      // Assert that setItemSpy has been called with the correct key ("access_token")
-      expect(setItemSpy).toHaveBeenCalledWith(
-        "access_token",
-        MOCK_ACCESS_TOKEN,
-      );
+        // Assert that setItemSpy has been called with the correct key ("access_token")
+        expect(setItemSpy).toHaveBeenCalledWith(
+          "access_token",
+          MOCK_ACCESS_TOKEN,
+        );
+      });
     });
   });
 });

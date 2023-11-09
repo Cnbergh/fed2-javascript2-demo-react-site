@@ -93,7 +93,7 @@ function ExampleRegisterForm() {
                   type="text"
                   autoComplete="name"
                   required
-                  defaultValue={`RandomUser_${Math.floor(
+                  placeholder={`RandomUser_${Math.floor(
                     Math.random() * 10000000,
                   )}`}
                   className="px-1 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -153,7 +153,7 @@ function ExampleRegisterForm() {
                   type="email"
                   autoComplete="email"
                   required
-                  defaultValue={`${Math.floor(
+                  placeholder={`${Math.floor(
                     Math.random() * 10000000,
                   )}-last@stud.noroff.no`}
                   className="px-1 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -178,7 +178,6 @@ function ExampleRegisterForm() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  defaultValue="UzI1NiIsInR5cCI"
                   className="block w-full rounded-md border-0 px-1 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

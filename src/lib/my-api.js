@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { NOROFF_API_URL } from "./constants";
 
 const BASE_URL = "https://dummyjson.com";
 
@@ -103,8 +104,6 @@ export const fetchThings = async (url) => {
     throw error;
   }
 };
-
-const NOROFF_API_URL = import.meta.env.VITE_NOROFF_API_URL;
 
 /**
  * Helper function to add the

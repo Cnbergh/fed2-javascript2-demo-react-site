@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { PostShape } from "./types";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { API_URL } from "../../lib/constants";
 
 /**
  * @typedef {import('./types.js').Post} Post

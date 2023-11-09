@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 // import { useAllUsers } from "../../lib/my-api";
 import PostUI from "./ui";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { API_URL } from "../../lib/constants";
 
 // NOTE: This is a helper function that we can use to fetch data from an API
 const fetchThings = async (url) => {

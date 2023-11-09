@@ -1,27 +1,26 @@
-const API_URL = import.meta.env.VITE_API_URL;
+import { API_URL } from "../../lib/constants";
 
 export default function CreatePostForm() {
   async function handleOnSubmit(event) {
     event.preventDefault();
 
-    const form = event.target;
-    const { title, userId } = form.elements;
+    const formData = new FormData(event.target);
 
-    const newPost = {
-      title: title.value,
-      body: title.value,
-      userId: userId.value,
-    };
+    formData.append("userId", 1);
+    formData.append("body", formData.get("title"));
 
-    const response = await fetch(`${API_URL}/posts`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=UTF-8" },
-      body: JSON.stringify(newPost),
-    });
+    try {
+      const response = await fetch(`${API_URL}/posts`, {
+        method: "POST",
+        body: formData,
+      });
 
-    const json = await response.json();
+      const json = await response.json();
 
-    console.warn("data from server using async/await", json);
+      console.warn("data from server using async/await", json);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -50,23 +49,6 @@ export default function CreatePostForm() {
           />
         </div>
       </section>
-
-      <div>
-        <div className="flex flex-col gap-1 mt-2">
-          <label
-            htmlFor="userId"
-            className="block text-sm font-medium leading-6 text-white"
-          >
-            User Id
-          </label>
-          <input
-            id="userId"
-            name="userId"
-            required
-            className="block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
-      </div>
 
       <div>
         <button

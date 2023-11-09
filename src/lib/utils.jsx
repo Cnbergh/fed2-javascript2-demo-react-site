@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-export const renderWithQuery = (component) => {
+export const renderWithDeps = (Component) => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -27,42 +27,26 @@ export const renderWithQuery = (component) => {
     /* eslint-enable */
   });
 
-  return render(
-    <QueryClientProvider client={queryClient}>{component}</QueryClientProvider>,
-  );
-};
-
-/**
- * Create Tanstack router for testing
- * @deprecated
- * */
-export function _createTestRouter(component) {
   const rootRoute = new RootRoute({
     component: Outlet,
   });
 
-  const componentRoute = new Route({
+  const indexRoute = new Route({
     getParentRoute: () => rootRoute,
     path: "/",
-    component,
+    component: () => Component,
   });
 
-  const router = new Router({
-    routeTree: rootRoute.addChildren([componentRoute]),
-    history: createMemoryHistory(),
-  });
+  const routeTree = rootRoute.addChildren([indexRoute]);
 
-  return router;
-}
+  const router = new Router({ routeTree });
 
-// const _router = createTestRouter(() => <></>);
-
-/**
- * @deprecated
- *  */
-export function _renderWithRouter(component) {
-  return renderWithQuery(<RouterProvider router={component} />);
-}
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>,
+  );
+};
 
 // setup function
 export function renderWithUser(jsx) {
@@ -70,6 +54,6 @@ export function renderWithUser(jsx) {
     user: userEvent.setup(),
     // Import `render` from the framework library of your choice.
     // See https://testing-library.com/docs/dom-testing-library/install#wrappers
-    ...renderWithQuery(jsx),
+    ...renderWithDeps(jsx),
   };
 }

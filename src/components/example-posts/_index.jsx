@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 // import { useAllUsers } from "../../lib/my-api";
 import PostUI from "./ui";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { API_URL } from "../../lib/constants";
 
 /**
  * A product sold on the website which end-users can add their Cart.

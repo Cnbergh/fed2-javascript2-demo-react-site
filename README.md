@@ -1,8 +1,8 @@
 # Links
 
-- [Production Website](react-social-demo.netlify.app)
+- [Production Website](https://react-social-demo.netlify.app)
 - [Deploy pipeline](https://app.netlify.com/sites/react-social-demo/configuration/general)
-- [Staging Website]() #TODO
+- [Staging Website](https://vitejsvitequhvvt-ohuj--5173--5a198b5c.local-corp.webcontainer.io)
 - [Live Code](https://stackblitz.com/edit/vitejs-vite-quhvvt?file=README.md)
 - [Project Plan]() #TODO
 - [Design specifications]() #TODO
@@ -20,6 +20,7 @@ This template provides a minimal setup to get React working in Vite with HMR and
 
 - Demonstrative front-end web application using a REST API for data display, editing, and deletion (mutations).
 - Streamlined setup for React within Vite, with Hot Module Replacement (HMR) and ESLint rules.
+- Automated end-to-end testing with Cypress.
 
 ## Plugins
 
@@ -40,9 +41,9 @@ This template provides a minimal setup to get React working in Vite with HMR and
 ## Stack
 
 - React
-- TanStack/Query
+- Vitest with RTL (React testing library)
 - Cypress e2e Testing
-- Vitest Unit Testing
-- formkit/auto-animate
+- TanStack/Query
 - Tailwind CSS
 - shadcn UI
+- formkit/auto-animate

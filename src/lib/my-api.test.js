@@ -4,8 +4,14 @@ import { renderHook, waitFor } from "@testing-library/react";
 
 import mockPosts from "./fakedb/posts.json";
 import mockNoroffPosts from "./fakedb/noroffPosts.json";
+import mockDummyUsers from "./fakedb/dummyUsers.json";
 import { queryWrapper as wrapper } from "./testing/helpers";
-import { fetchAllPosts, useAllPosts, fetchNoroffPosts } from "./my-api";
+import {
+  fetchAllPosts,
+  useAllPosts,
+  useAllUsers,
+  fetchNoroffPosts,
+} from "./my-api";
 
 describe("Unit | My API >>>", () => {
   beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
@@ -23,42 +29,70 @@ describe("Unit | My API >>>", () => {
 
       expect(postResult).toStrictEqual(mockPosts);
     });
+  });
 
-    // Example: Testing a react custom hook
-    describe("useAllPosts", () => {
-      it("returns loading status", async () => {
-        const { result } = renderHook(() => useAllPosts(), { wrapper });
-        console.log(result.current);
+  describe("fetchNoroffPosts", () => {
+    it("returns a list of posts", async () => {
+      const result = await fetchNoroffPosts();
 
-        await waitFor(() => {
-          expect(result.current.isSuccess).toBe(false);
-          expect(result.current.isLoading).toBe(true);
-          expect(result.current.status).toBe("loading");
-        });
-      });
+      expect(result).toStrictEqual(mockNoroffPosts);
+    });
+  });
 
-      it("returns error", async () => {
-        const { result } = renderHook(() => useAllPosts(), { wrapper });
+  // Example: Testing a react custom hook
+  describe("useAllPosts", () => {
+    it("returns loading status", async () => {
+      const { result } = renderHook(() => useAllPosts(), { wrapper });
 
-        await waitFor(() => {
-          expect(result.current.error).toBe(null);
-        });
-      });
-
-      it("returns data", async () => {
-        const { result } = renderHook(() => useAllPosts(), { wrapper });
-
-        await waitFor(() => {
-          expect(result.current.data).toStrictEqual(mockPosts);
-        });
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(false);
+        expect(result.current.isLoading).toBe(true);
+        expect(result.current.status).toBe("loading");
       });
     });
 
-    describe("fetchNoroffPosts", () => {
-      it("returns a list of posts", async () => {
-        const results = await fetchNoroffPosts();
+    it("returns error", async () => {
+      const { result } = renderHook(() => useAllPosts(), { wrapper });
 
-        expect(results).toStrictEqual(mockNoroffPosts);
+      await waitFor(() => {
+        expect(result.current.error).toBe(null);
+      });
+    });
+
+    it("returns data", async () => {
+      const { result } = renderHook(() => useAllPosts(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.data).toStrictEqual(mockPosts);
+      });
+    });
+  });
+
+  // Example: Testing a react custom hook
+  describe("useAllUsers", () => {
+    it("returns loading status", async () => {
+      const { result } = renderHook(() => useAllUsers(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(false);
+        expect(result.current.isLoading).toBe(true);
+        expect(result.current.status).toBe("loading");
+      });
+    });
+
+    it("returns error", async () => {
+      const { result } = renderHook(() => useAllUsers(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.error).toBe(null);
+      });
+    });
+
+    it("returns data", async () => {
+      const { result } = renderHook(() => useAllUsers(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.data).toStrictEqual(mockDummyUsers);
       });
     });
   });

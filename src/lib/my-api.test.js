@@ -1,59 +1,99 @@
-import axios from "axios";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { NOROFF_API_URL } from "./constants";
-import { expect, describe, it } from "vitest";
-import { useAllUsers } from "./my-api";
+import { expect, describe, it, beforeAll, afterAll, afterEach } from "vitest";
+import server from "./msw/server";
+import { renderHook, waitFor } from "@testing-library/react";
 
-const BASE_URL = "https://dummyjson.com";
+import mockPosts from "./fakedb/posts.json";
+import mockNoroffPosts from "./fakedb/noroffPosts.json";
+import mockDummyUsers from "./fakedb/dummyUsers.json";
+import { queryWrapper as wrapper } from "./testing/helpers";
+import {
+  fetchAllPosts,
+  useAllPosts,
+  useAllUsers,
+  fetchNoroffPosts,
+} from "./my-api";
 
-describe("fetchAllPosts", () => {
-  it.skip("returns #TODO", () => {});
-});
+describe("Unit | My API >>>", () => {
+  beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
 
-describe("fetchAllPosts", () => {
-  it.skip("returns #TODO", () => {});
-});
+  // Reset handlers after each test `important for test isolation`
+  afterEach(() => server.resetHandlers());
 
-describe("useAllPosts", () => {
-  it.skip("returns #TODO", () => {});
-});
+  //  Close server after all tests
+  afterAll(() => server.close());
 
-describe("useUsersPosts", () => {
-  it.skip("returns #TODO", (userId = 1) => {});
-});
+  describe("fetchAllPosts", () => {
+    // Example: Testing a function
+    it("returns posts", async () => {
+      const postResult = await fetchAllPosts();
 
-describe("fetchUser", () => {
-  it.skip("returns #TODO", () => {});
-});
+      expect(postResult).toStrictEqual(mockPosts);
+    });
+  });
 
-describe("useUser", (userId = 1) => {
-  it.skip("returns #TODO", () => {});
-});
+  describe("fetchNoroffPosts", () => {
+    it("returns a list of posts", async () => {
+      const result = await fetchNoroffPosts();
 
-describe("fetchAllUsers", (userId = 1) => {
-  it.skip("returns #TODO", () => {});
-});
+      expect(result).toStrictEqual(mockNoroffPosts);
+    });
+  });
 
-describe("Unit | Component | Posts UI", () => {
-  it.skip("returns #TODO", () => {});
-});
+  // Example: Testing a react custom hook
+  describe("useAllPosts", () => {
+    it("returns loading status", async () => {
+      const { result } = renderHook(() => useAllPosts(), { wrapper });
 
-describe("Unit | Util | useAllUsers", () => {
-  it.skip("returns #TODO", () => {});
-});
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(false);
+        expect(result.current.isLoading).toBe(true);
+        expect(result.current.status).toBe("loading");
+      });
+    });
 
-describe("Unit | Util | useAllUsers", () => {
-  it.skip("returns #TODO", () => {});
-});
+    it("returns error", async () => {
+      const { result } = renderHook(() => useAllPosts(), { wrapper });
 
-describe("Unit | Util | login", () => {
-  it.skip("returns #TODO", () => {});
-});
+      await waitFor(() => {
+        expect(result.current.error).toBe(null);
+      });
+    });
 
-describe("Unit | Util | useLogin", () => {
-  it.skip("returns #TODO", () => {});
-});
+    it("returns data", async () => {
+      const { result } = renderHook(() => useAllPosts(), { wrapper });
 
-describe("Unit | Util | describe", () => {
-  it.skip("returns #TODO", () => {});
+      await waitFor(() => {
+        expect(result.current.data).toStrictEqual(mockPosts);
+      });
+    });
+  });
+
+  // Example: Testing a react custom hook
+  describe("useAllUsers", () => {
+    it("returns loading status", async () => {
+      const { result } = renderHook(() => useAllUsers(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(false);
+        expect(result.current.isLoading).toBe(true);
+        expect(result.current.status).toBe("loading");
+      });
+    });
+
+    it("returns error", async () => {
+      const { result } = renderHook(() => useAllUsers(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.error).toBe(null);
+      });
+    });
+
+    it("returns data", async () => {
+      const { result } = renderHook(() => useAllUsers(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.data).toStrictEqual(mockDummyUsers);
+      });
+    });
+  });
 });

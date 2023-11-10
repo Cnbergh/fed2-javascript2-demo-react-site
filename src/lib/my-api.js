@@ -16,7 +16,7 @@ export async function fetchAllPosts() {
 export function useAllPosts() {
   return useQuery({
     queryKey: ["posts"],
-    queryFn: () => fetchAllPosts(),
+    queryFn: fetchAllPosts,
   });
 }
 

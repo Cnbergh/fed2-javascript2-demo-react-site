@@ -71,7 +71,7 @@ export async function fetchAllUsers() {
 export function useAllUsers() {
   return useQuery({
     queryKey: ["users"],
-    queryFn: () => fetchAllUsers(),
+    queryFn: fetchAllUsers,
   });
 }
 
